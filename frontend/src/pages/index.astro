@@ -1,23 +1,26 @@
 ---
-import Home from '../components/Home.jsx';
-import '../styles/darksite.css';
 import Layout from '../layouts/Layout.astro';
 import ProductList from '../components/ProductList.astro';
-const products = [
-  {
-    image: '/images/item1.jpg',
-    title: 'Товар 1',
-    description: 'Описание товара 1'
+import Searchbar from '../components/Searchbar.astro';
+const page = 1;
+const amount = 20;
+const res = await fetch('http://backend:8080/search', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
   },
-  {
-    image: '/images/item2.jpg',
-    title: 'Товар 2',
-    description: 'Описание товара 2'
-  }
-];
+  body: JSON.stringify({ page, amount }),
+});
+const data = await res.json();
+const products = data.results || [];
 ---
 
 <Layout>
-    <Home client:load />
+    <Searchbar client:load />
+
+  <div id="product-list">
     <ProductList products={products} />
+  </div>
+
+  <script type="module" src="/lib/products.js"></script>
 </Layout>

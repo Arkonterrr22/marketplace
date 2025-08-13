@@ -13,7 +13,7 @@ import '../styles/darksite.css'
       if(user){
         const navItems = [
           { label: 'Профиль', href: '/profile', showIfLoggedIn: true, getLabel: u => u.email },
-          { label: 'Контакты', href: '/contacts' }
+          { label: 'Мои объявления', href: '/myitems', showIfLoggedIn: true}
         ];
 
         const nav = document.getElementById('sidebar-nav');
@@ -46,7 +46,6 @@ import '../styles/darksite.css'
           <nav id="sidebar-nav">
             <!-- Предзагруженные ссылки для гостя -->
             <a href="/login">Вход/Регистрация</a>
-            <a href="/contacts">Контакты</a>
           </nav>
         </aside>
       </div>

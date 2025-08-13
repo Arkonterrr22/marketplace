@@ -1,0 +1,25 @@
+---
+---
+<div id="searchbar">
+  <input
+    id="search-input"
+    type="text"
+    placeholder="Поиск..."
+    style="
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 0.75rem 2.5rem 0.75rem 1rem;
+      background-color: #1f1f1f;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    "
+  />
+</div>
+
+<script type="module" is:inline>
+  import { initSearch } from '../lib/search.js';
+  initSearch(document.getElementById('search-input'));
+</script>

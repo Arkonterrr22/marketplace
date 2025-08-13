@@ -38,6 +38,7 @@ func main() {
 	r.POST("/login", api.LoginHandler(db))
 	r.POST("/me", api.MeHandler())
 	r.POST("/logout", api.LogoutHandler())
+	r.POST("/search", api.SearchHandler(db))
 
 	fmt.Println("Server started on :8080")
 	r.Run(":8080")

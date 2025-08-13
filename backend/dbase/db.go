@@ -42,6 +42,14 @@ func InitSchema(db *sql.DB) error {
 			company TEXT NOT NULL DEFAULT '',
 			created_at TIMESTAMPTZ DEFAULT now()
 		);`,
+		`CREATE TABLE IF NOT EXISTS items (
+			id SERIAL PRIMARY KEY,
+			title VARCHAR(255) NOT NULL,
+			description TEXT,
+			image VARCHAR(512),
+			created_at TIMESTAMPTZ DEFAULT now(),
+			updated_at TIMESTAMPTZ DEFAULT now()
+		);`,
 		// сюда можно добавлять другие таблицы
 	}
 
