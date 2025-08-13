@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #1a1a1a;
+  color: #aaa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header, footer {
+  display: flex;
+  align-items: center;
+  background: #333;
+  color: white;
+  padding-left: 20px;
+}
+
+#betweenblock {
+  display: flex;
+  width: 100%;
+  height:100%;
+  overflow: hidden;
+  position: relative; /* ключевой момент — чтобы Sidebar не вылезал за блок */
+}
+
+main {
+  flex: 1;
+  max-width: 100%;         /* ширина 80% родителя */
+  margin-inline: 10%;             /* чтобы flex работал корректно */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  background: #1a1a1a;
+  padding: 5% 16%;
+  box-sizing: border-box;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding: 2rem;
+}
+
+a {
+  color: #aaa;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+a:hover {
+  color: #fff;
+}
+
+button {
+  background: transparent;
+  border: 1px solid #aaaaaa53;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #aaaaaa53;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(170, 170, 170, 0.5);
+}
+#sidebar-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 30px;
+      height: 100%;
+      background-color: transparent;
+      cursor: pointer;
+      z-index: 1100;
+    }
+
+    #sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background-color: #222;
+      color: transparent;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding: 2rem;
+      box-shadow: none;
+      transition: width 0.3s ease;
+      z-index: 1200;
+      white-space: nowrap;
+    }
+
+    #sidebar-wrapper:hover #sidebar {
+      width: 200px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    }
+    #sidebar-nav a {
+    display: block;
+    opacity: 0;         /* Скрыты по умолчанию */
+    gap: 1rem;
+    text-decoration: none;
+    transition: opacity 0.3s ease; /* Плавное появление */
+  }
+
+    #sidebar-wrapper:hover #sidebar-nav a {
+      opacity: 1;        /* Становятся видимыми при hover */
+      gap: 1rem;
+    }

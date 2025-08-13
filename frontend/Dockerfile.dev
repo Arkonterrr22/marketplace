@@ -1,0 +1,16 @@
+FROM node:alpine
+
+WORKDIR /app
+
+# Устанавливаем зависимости отдельно для кеширования
+COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
+RUN npm install
+
+# Копируем всё остальное
+# COPY . .
+
+# Открываем порт Astro dev сервера
+EXPOSE 4321
+
+# Запуск dev сервера
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

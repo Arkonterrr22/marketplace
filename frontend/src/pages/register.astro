@@ -1,0 +1,68 @@
+---
+import '../styles/darksite.css';
+---
+
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Регистрация</title>
+    <style>
+      body {
+        align-items: center;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 300px;
+      }
+      input, button {
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: none;
+      }
+      .register-btn { background-color: #222; color: #fff; }
+      .register-btn:hover { background-color: #444; }
+    </style>
+  </head>
+
+  <body style="gap:1rem;">
+    <h2>Регистрация</h2>
+    <form id="register-form">
+      <input type="text" id="email" placeholder="Email" required />
+      <input type="text" id="password" placeholder="Пароль" required minlength="6" />
+      <button type="submit" class="register-btn">Зарегистрироваться</button>
+    </form>
+
+    <script type="module">
+      import { Session } from '/lib/session.js';
+      const user = Session();
+      if (user) {
+        const from = sessionStorage.getItem('from') || '/';
+        window.location.href = from;
+      }
+
+      const form = document.getElementById('register-form');
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+          const res = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+
+          if (!res.ok) throw new Error('Ошибка регистрации: ' + res.statusText);
+
+          // Успешно — перенаправляем на логин
+          window.location.href = '/login';
+        } catch (err) {
+          alert('Ошибка регистрации: ' + err.message);
+        }
+      });
+    </script>
+  </body>
+</html>

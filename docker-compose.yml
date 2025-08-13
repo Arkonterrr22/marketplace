@@ -1,0 +1,61 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: frontend
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - BACKEND_URL=http://backend:8080
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - /app/bin
+
+    environment:
+      - DB_HOST=db
+      - DB_USER=arkonterrr
+      - DB_PASSWORD=arkonterrr@yandex.ru
+      - DB_NAME=db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17
+    container_name: db
+    environment:
+      POSTGRES_USER: arkonterrr
+      POSTGRES_PASSWORD: arkonterrr@yandex.ru
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/app/postgresql/data
+
+  nginx:
+      image: nginx:alpine
+      container_name: nginx
+      ports:
+        - "80:80"
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./frontend/dist:/app/dist:ro
+      depends_on:
+        - frontend
+
+volumes:
+  pgdata:

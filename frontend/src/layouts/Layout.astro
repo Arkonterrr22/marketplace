@@ -1,0 +1,62 @@
+---
+// layout.astro
+const { title = "Шаблон", header = "", footer = "Футер"} = Astro.props;
+const headerHeight = 0;
+const footerHeight = 10;
+import '../styles/darksite.css'
+---  
+<html lang="ru">
+  <head>
+    <script type="module">
+      import { Session } from '/lib/session.js';
+      const user = Session();
+      if(user){
+        const navItems = [
+          { label: 'Профиль', href: '/profile', showIfLoggedIn: true, getLabel: u => u.email },
+          { label: 'Контакты', href: '/contacts' }
+        ];
+
+        const nav = document.getElementById('sidebar-nav');
+        nav.innerHTML = ''; // очищаем дефолтные ссылки
+
+        navItems.forEach(item => {
+          if(item.showIfLoggedIn === undefined || item.showIfLoggedIn === !!user){
+            const a = document.createElement('a');
+            a.href = item.href;
+            a.textContent = item.getLabel ? item.getLabel(user) : item.label;
+            // a.style.opacity = 0;
+            nav.appendChild(a);
+          }
+        });
+      }
+    </script>  
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+
+</head>
+  <body>
+    <header>
+      <h1 style=`margin:0;max-height:${headerHeight};`>{header}</h1>
+    </header>
+
+    <div id="betweenblock" style={`min-height:calc(100vh - ${headerHeight}vh)`}>
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <aside id="sidebar">
+          <nav id="sidebar-nav">
+            <!-- Предзагруженные ссылки для гостя -->
+            <a href="/login">Вход/Регистрация</a>
+            <a href="/contacts">Контакты</a>
+          </nav>
+        </aside>
+      </div>
+      <main>
+        <slot />
+      </main>
+    </div>
+
+    <footer>
+      <h1>{footer}</h1>
+    </footer>
+  </body>
+</html>

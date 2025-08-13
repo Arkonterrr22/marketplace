@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Профиль">
+  <h1>Профиль пользователя</h1>
+  <p id="user-email"></p>
+  <button id="logout-btn">Выйти</button>
+
+  <script>
+    if (!window.currentUser) {
+      console.log('no user')
+      window.location.href = '/login';
+    } else {
+      document.getElementById('user-email').textContent =
+        `Email: ${window.currentUser.email}`;
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('arkontoken');
+      window.location.href = '/';
+    });
+  </script>
+</Layout>

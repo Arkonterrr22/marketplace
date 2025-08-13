@@ -1,0 +1,89 @@
+---
+import api from '../lib/api.js';
+import '../styles/darksite.css'
+---
+
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Вход</title>
+    <style>
+      body {
+        align-items: center;
+      }
+      form, .register-btn {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 300px;
+      }
+      input, button {
+        height: 2rem;
+        box-sizing: border-box;
+        border-radius: 6px;
+        border: none;
+      }
+
+      .login-btn { background-color: #222; color: #fff; }
+      .login-btn:hover { background-color: #444; }
+      .register-btn { background-color: #555; color: #fff; }
+      .register-btn:hover { background-color: #777; }
+    </style>
+  </head>
+
+  <body style="gap:1rem;">
+    <h2>Вход</h2>
+    <form id="login-form">
+      <input type="text" id="email" placeholder="Email" required />
+      <input type="text" id="password" placeholder="Пароль" required minlength="6" />
+      <button type="submit" class="login-btn">Войти</button>
+    </form>
+
+    <button class="register-btn" id="go-register">Регистрация</button>
+
+    <script type="module">
+      import { Session, saveToken } from '/lib/session.js';
+      const user = Session();
+      if (user) {
+        console.log(user)
+        const from = sessionStorage.getItem('from') || '/';
+        console.log('redirecting')
+        window.location.href = from;
+      }
+
+      document.getElementById('go-register').onclick = () => {
+        window.location.href = '/register';
+      };
+
+      const form = document.getElementById('login-form');
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!res.ok) throw new Error('Ошибка входа: ' + res.statusText);
+
+        const data = await res.json();
+        const token = data.token;
+
+        if (token) {
+          saveToken(token);
+          const from = sessionStorage.getItem('from') || '/';
+          window.location.href = from;
+        } else {
+          alert('Токен не получен');
+        }
+      } catch (err) {
+        alert('Ошибка входа: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
