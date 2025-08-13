@@ -2,9 +2,22 @@
 import Home from '../components/Home.jsx';
 import '../styles/darksite.css';
 import Layout from '../layouts/Layout.astro';
-
+import ProductList from '../components/ProductList.astro';
+const products = [
+  {
+    image: '/images/item1.jpg',
+    title: 'Товар 1',
+    description: 'Описание товара 1'
+  },
+  {
+    image: '/images/item2.jpg',
+    title: 'Товар 2',
+    description: 'Описание товара 2'
+  }
+];
 ---
 
 <Layout>
     <Home client:load />
+    <ProductList products={products} />
 </Layout>
