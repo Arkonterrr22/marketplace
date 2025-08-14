@@ -1,5 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import AddItemWindow from '../components/AddItemWindow.jsx'
+import ProductList from '../components/ProductList.astro';
 ---
+
 <Layout>
+<AddItemWindow client:load></AddItemWindow>
+<script type="module" is:inline>
+  import { refreshItems } from '../lib/items.js';
+  refreshItems();
+</script>
+  <div id="product-list">
+    <ProductList  />
+  </div>
 </Layout>

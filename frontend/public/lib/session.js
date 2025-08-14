@@ -38,7 +38,6 @@ export function Session() {
   if (typeof window === 'undefined') return null; // на сервере не выполняем
 
   const user = getUserFromToken();
-  window.currentUser = user;
 
   if (!user) {
     console.log('Гость');

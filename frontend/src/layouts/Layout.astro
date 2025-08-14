@@ -10,6 +10,7 @@ import '../styles/darksite.css'
     <script type="module">
       import { Session } from '/lib/session.js';
       const user = Session();
+      window.currentUser = user;
       if(user){
         const navItems = [
           { label: 'Профиль', href: '/profile', showIfLoggedIn: true, getLabel: u => u.email },

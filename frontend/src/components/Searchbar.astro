@@ -20,6 +20,12 @@
 </div>
 
 <script type="module" is:inline>
-  import { initSearch } from '../lib/search.js';
-  initSearch(document.getElementById('search-input'));
+  // const input = document.getElementById('search-input')
+  // console.log(input)
+  import { refreshItems } from '../lib/items.js';
+  refreshItems({
+  input: document.getElementById('search-input'),
+  page: 1,
+  amount: 20
+});
 </script>

@@ -2,13 +2,14 @@ package api
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type SearchRequest struct {
-	Name   string `json:"name"`
+	Name   string `json:"query"`
 	Page   int    `json:"page" binding:"required"`
 	Amount int    `json:"amount" binding:"required"`
 }
@@ -27,7 +28,7 @@ func SearchHandler(db *sql.DB) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
 			return
 		}
-
+		fmt.Print(req)
 		if req.Page < 1 {
 			req.Page = 1
 		}

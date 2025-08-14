@@ -16,11 +16,11 @@ const products = data.results || [];
 ---
 
 <Layout>
-    <Searchbar client:load />
+    <Searchbar />
 
   <div id="product-list">
     <ProductList products={products} />
   </div>
 
-  <script type="module" src="/lib/products.js"></script>
+  <script type="module" src="/lib/items.js"></script>
 </Layout>

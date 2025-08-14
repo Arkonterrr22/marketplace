@@ -46,7 +46,7 @@ func InitSchema(db *sql.DB) error {
 			id SERIAL PRIMARY KEY,
 			title VARCHAR(255) NOT NULL,
 			description TEXT,
-			image VARCHAR(512),
+			image VARCHAR(512) NOT NULL DEFAULT '',
 			created_at TIMESTAMPTZ DEFAULT now(),
 			updated_at TIMESTAMPTZ DEFAULT now()
 		);`,
