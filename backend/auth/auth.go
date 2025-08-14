@@ -14,29 +14,31 @@ import (
 var jwtKey = []byte("super_secret_key")
 
 type User struct {
-	ID      int
-	Email   string
-	Name    string
-	Company string
+	ID       int
+	Email    string
+	Password string
+	Userame  string
+	Company  string
+	Inn      string
 }
 
 type Claims struct {
 	UserID  int    `json:"user_id"`
 	Email   string `json:"email"`
-	Name    string `json:"name"`
+	Userame string `json:"username"`
 	Company string `json:"company"`
 	jwt.RegisteredClaims
 }
 
 // Регистрация пользователя
-func Register(db *sql.DB, email, password, name, company string) error {
+func Register(db *sql.DB, email, password, username, company string) error {
 	hashed, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
 	fmt.Printf("hashed: %s\n", hashed)
-	fmt.Printf("email: %s, password: %s name: %s company: %s\n", email, password, name, company)
-	res, err := db.Exec("INSERT INTO users (email, password, name, company) VALUES ($1, $2, $3, $4)", email, password, name, company)
+	fmt.Printf("email: %s, password: %s username: %s company: %s\n", email, password, username, company)
+	res, err := db.Exec("INSERT INTO users (email, password, username, company) VALUES ($1, $2, $3, $4)", email, password, username, company)
 	if err != nil {
 		log.Println("Insert error:", err)
 		return err
@@ -54,10 +56,10 @@ func Register(db *sql.DB, email, password, name, company string) error {
 
 		for rows.Next() {
 			var id int
-			var email, password, name, company string
+			var email, password, username, company string
 			var createdAt time.Time
 
-			err := rows.Scan(&id, &email, &password, &name, &company, &createdAt)
+			err := rows.Scan(&id, &email, &password, &username, &company, &createdAt)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -70,8 +72,8 @@ func Authenticate(db *sql.DB, email, password string) (*User, error) {
 	var user User
 	var hashed string
 
-	err := db.QueryRow("SELECT id, email, name, company, password FROM users WHERE email=$1", email).
-		Scan(&user.ID, &user.Email, &user.Name, &user.Company, &hashed)
+	err := db.QueryRow("SELECT id, email, username, company, password FROM users WHERE email=$1", email).
+		Scan(&user.ID, &user.Email, &user.Userame, &user.Company, &hashed)
 	if err != nil {
 		result := fmt.Sprintf("Invalid credentials: %s", err)
 		return nil, errors.New(result)
@@ -92,7 +94,7 @@ func GenerateJWT(user *User) (string, error) {
 	claims := &Claims{
 		UserID:  user.ID,
 		Email:   user.Email,
-		Name:    user.Name,
+		Userame: user.Userame,
 		Company: user.Company,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expiration),

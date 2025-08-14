@@ -29,10 +29,10 @@ func LoginHandler(db *sql.DB) gin.HandlerFunc {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"token":   tokenString,
-			"email":   user.Email,
-			"name":    user.Name,
-			"company": user.Company,
+			"token":    tokenString,
+			"email":    user.Email,
+			"nsername": user.Username,
+			"company":  user.Company,
 		})
 	}
 }

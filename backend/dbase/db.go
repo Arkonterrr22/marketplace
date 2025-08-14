@@ -34,18 +34,22 @@ func ConnectWithRetry(maxRetries int, delay time.Duration) (*sql.DB, error) {
 
 func InitSchema(db *sql.DB) error {
 	queries := []string{
+		`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`,
 		`CREATE TABLE IF NOT EXISTS users (
-			id SERIAL PRIMARY KEY,
+			id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 			email TEXT UNIQUE NOT NULL,
 			password TEXT NOT NULL,
-			name TEXT NOT NULL DEFAULT '',
+			username TEXT NOT NULL DEFAULT '',
 			company TEXT NOT NULL DEFAULT '',
+			inn TEXT NOT NULL DEFAULT '',
 			created_at TIMESTAMPTZ DEFAULT now()
 		);`,
 		`CREATE TABLE IF NOT EXISTS items (
-			id SERIAL PRIMARY KEY,
+			id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+			owner_id UUID NOT NULL,
 			title VARCHAR(255) NOT NULL,
 			description TEXT,
+			price NUMERIC(10,2),
 			image VARCHAR(512) NOT NULL DEFAULT '',
 			created_at TIMESTAMPTZ DEFAULT now(),
 			updated_at TIMESTAMPTZ DEFAULT now()

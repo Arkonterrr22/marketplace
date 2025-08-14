@@ -8,7 +8,7 @@ import ProductList from '../components/ProductList.astro';
 <AddItemWindow client:load></AddItemWindow>
 <script type="module" is:inline>
   import { refreshItems } from '../lib/items.js';
-  refreshItems();
+  refreshItems({filter:{'owner':window.currentUser.email}});
 </script>
   <div id="product-list">
     <ProductList  />

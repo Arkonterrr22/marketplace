@@ -26,10 +26,10 @@ func MeHandler() gin.HandlerFunc {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"user_id": claims.UserID,
-			"email":   claims.Email,
-			"name":    claims.Name,
-			"company": claims.Company,
+			"user_id":  claims.UserID,
+			"email":    claims.Email,
+			"username": claims.Username,
+			"company":  claims.Company,
 		})
 	}
 }

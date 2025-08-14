@@ -1,13 +1,13 @@
 import { Search } from './search.js';
 
-export function refreshItems({ input = null, page = 1, amount = 20 } = {}) {
+export function refreshItems({ filter={}, input = null, page = 1, amount = 20 } = {}) {
     const list = document.getElementById('product-list');
   if (!list) {
     console.warn('Не найден элемент с id="product-list"');
     return;
   }
   const fetchAndRender = async (query, pageNum = page, itemsPerPage = amount) => {
-    const res = await Search({ query, page: pageNum, amount: itemsPerPage });
+    const res = await Search({ filter:filter, query:query, page: pageNum, amount: itemsPerPage });
     const products = res.results || [];
 
     list.innerHTML = '';

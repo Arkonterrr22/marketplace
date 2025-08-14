@@ -43,7 +43,7 @@ export function Session() {
     console.log('Гость');
     return null;
   } else {
-    console.log('Пользователь:', user.email);
+    console.log('Пользователь:', user);
     return user;
   }
 }

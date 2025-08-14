@@ -6,7 +6,7 @@ export async function Search({ filter = {}, query = '', page = 1, amount = 20 } 
   const res = await fetch('/api/search', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, page, amount }),
+    body: JSON.stringify({ filter, query, page, amount }),
   });
   const data = await res.json() || {'results': [], 'warn':'no data!'};
   console.log(data)

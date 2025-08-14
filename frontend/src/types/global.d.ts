@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    currentUser?: { email: string; [key: string]: any };
+    currentUser?: { email: string; id: string; name: string; company: string; [key: string]: any };
   }
 }
 export {};
