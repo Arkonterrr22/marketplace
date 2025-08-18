@@ -19,17 +19,17 @@ func MeHandler() gin.HandlerFunc {
 			return
 		}
 
-		claims, err := auth.ParseJWT(req.Token)
+		userToken, err := auth.ParseJWT(req.Token)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			return
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"user_id":  claims.UserID,
-			"email":    claims.Email,
-			"username": claims.Username,
-			"company":  claims.Company,
+			"user_id":  userToken.ID,
+			"email":    userToken.Email,
+			"username": userToken.Username,
+			"company":  userToken.Company,
 		})
 	}
 }

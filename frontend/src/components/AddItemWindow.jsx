@@ -26,7 +26,7 @@ export default function AddItemWindow() {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
   .modal {
     position: fixed;
     top: 0;
